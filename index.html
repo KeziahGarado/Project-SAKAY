@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/SAKAY.jpg">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Project SAKAY</title>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="images/sakay_clean.png" alt="Sakay" class="logo-image">
+    </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#" class="active" data-page="dashboard">Dashboard</a></li>
+            <li><a href="#" data-page="crowd">Crowd Status</a></li>
+            <li><a href="#" data-page="terminal">Terminal Suggestion</a></li>
+        </ul>
+    </nav>
+    <div class="user-actions">
+        <div class="icon-btn"><i class="fa-solid fa-bell"></i></div>
+        <div class="icon-btn"><i class="fa-solid fa-user"></i></div>
+    </div>
+</header>
+
+<!-- DASHBOARD -->
+<section class="page active" id="page-dashboard">
+    <div class="dash-layout">
+        <div class="tagline">
+            <h1>Commute <span class="highlight">Smarter</span>,<br>Travel <span class="highlight">Easier</span></h1>
+            <div class="tagline-stats">
+                <div class="stat-pill">
+                    <i class="fa-solid fa-circle-dot pulse"></i>
+                    <span>Live Forecast</span>
+                </div>
+                <div class="stat-pill" id="current-level-pill">
+                    <i class="fa-solid fa-users"></i>
+                    <span id="current-level-text">Loading...</span>
+                </div>
+            </div>
+        </div>
+        <div class="dash-grid">
+            <div class="card span2">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div>
+                        <div class="card-label">Crowd Density Forecast</div>
+                        <div class="card-sub">Best case, expected, and worst-case ranges</div>
+                    </div>
+                    <span class="badge">Live</span>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="dashChart"></canvas>
+                </div>
+            </div>
+            <div class="card" id="dash-crowd-card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fa-solid fa-people-group"></i></div>
+                    <div>
+                        <div class="card-label">Current Crowd</div>
+                        <div class="card-sub" id="dash-crowd-sub">Analyzing...</div>
+                    </div>
+                </div>
+                <div class="crowd-meter">
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="dash-meter-fill"></div>
+                    </div>
+                    <div class="meter-labels">
+                        <span>Low</span><span>Moderate</span><span>High</span>
+                    </div>
+                </div>
+                <div class="crowd-value" id="dash-crowd-value">—</div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fa-solid fa-bus"></i></div>
+                    <div>
+                        <div class="card-label">Terminal Advisory</div>
+                        <div class="card-sub">Based on forecast</div>
+                    </div>
+                </div>
+                <div class="advisory-text" id="dash-advisory">Calculating recommendation...</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CROWD STATUS -->
+<section class="page" id="page-crowd">
+    <div class="crowd-grid">
+        <div class="card span2">
+            <div class="card-header">
+                <div class="card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                <div>
+                    <div class="card-label">Hourly Crowd Forecast</div>
+                    <div class="card-sub">Full 24-hour prediction window</div>
+                </div>
+                <span class="badge">Live</span>
+            </div>
+            <div class="chart-wrap">
+                <canvas id="crowdChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fa-solid fa-chart-bar"></i></div>
+                <div>
+                    <div class="card-label">Peak Hour</div>
+                    <div class="card-sub" id="peak-hour-label">Detecting...</div>
+                </div>
+                <span class="badge" id="peak-badge">—</span>
+            </div>
+            <div class="crowd-value large" id="peak-value">—</div>
+            <div class="card-sub" style="margin-top:8px">Expected max crowd density</div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fa-solid fa-clock"></i></div>
+                <div>
+                    <div class="card-label">Forecast Range</div>
+                    <div class="card-sub">Low to high estimate</div>
+                </div>
+            </div>
+            <div class="range-display">
+                <div class="range-item low">
+                    <span class="range-label">P10 Low</span>
+                    <span class="range-val" id="avg-p10">—</span>
+                </div>
+                <div class="range-item mid">
+                    <span class="range-label">P50 Mid</span>
+                    <span class="range-val" id="avg-p50">—</span>
+                </div>
+                <div class="range-item high">
+                    <span class="range-label">P90 High</span>
+                    <span class="range-val" id="avg-p90">—</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TERMINAL SUGGESTION -->
+<section class="page" id="page-terminal">
+    <div class="terminal-grid">
+        <div class="card span2">
+            <div class="card-header">
+                <div class="card-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div>
+                    <div class="card-label">Terminal Crowd Trend</div>
+                    <div class="card-sub">Expected daily baseline trends</div>
+                </div>
+                <span class="badge">Active</span>
+            </div>
+            <div class="chart-wrap">
+                <canvas id="terminalChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fa-solid fa-star"></i></div>
+                <div>
+                    <div class="card-label">Best Time to Travel</div>
+                    <div class="card-sub" id="best-time-label">Calculating...</div>
+                </div>
+                <span class="badge good">Recommended</span>
+            </div>
+            <div class="advisory-text" id="best-time-text">—</div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div>
+                    <div class="card-label">Avoid These Hours</div>
+                    <div class="card-sub" id="avoid-label">Calculating...</div>
+                </div>
+                <span class="badge warn">Caution</span>
+            </div>
+            <div class="advisory-text" id="avoid-text">—</div>
+        </div>
+    </div>
+</section>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
