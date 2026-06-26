@@ -135,7 +135,8 @@ const chartDefaults = {
 
 // ── MAIN ──
 async function init() {
-    const data = await loadCSV('single_prediction_results1.csv');
+    const S3_URL = "https://project-sakay-hackathon.s3.ap-southeast-1.amazonaws.com/clean-files/single_prediction_results1.csv";
+    const data = await loadCSV(S3_URL);
 
     let lastSeenDate = ""; 
 
