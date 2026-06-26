@@ -58,7 +58,7 @@ async function updateAIRecommendations(currentP50, currentCrowd, maxP50, peakDat
         avoidEl.textContent = parsed.avoidTime;
         return; 
     }
-
+//PJSK - project sakay
     // 2. CONSOLIDATED PROMPT BATCHING
     const prompt = `
     You are an AI assistant for SAKAY, a public commuter forecasting app for Davao City's DCOTT terminal.
@@ -132,7 +132,7 @@ const chartDefaults = {
         y: { ticks: { color: '#278693', font: { size: 10 } }, grid: { color: 'rgba(0,180,180,0.06)' } }
     }
 };
-
+// miku dayo
 // ── MAIN ──
 async function init() {
     const S3_URL = "https://project-sakay-hackathon.s3.ap-southeast-1.amazonaws.com/clean-files/single_prediction_results1.csv";
@@ -263,3 +263,4 @@ async function init() {
 }
 
 init();
+
