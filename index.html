@@ -19,6 +19,7 @@
     <nav>
         <ul class="nav-links">
             <li><a href="#" class="active" data-page="dashboard">Dashboard</a></li>
+            <li><a href="#" data-page="demo">Demo Input</a></li>
             <li><a href="#" data-page="crowd">Crowd Status</a></li>
             <li><a href="#" data-page="terminal">Terminal Suggestion</a></li>
         </ul>
@@ -87,6 +88,140 @@
                 </div>
                 <div class="advisory-text" id="dash-advisory">Calculating recommendation...</div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- DEMO INPUT -->
+<section class="page" id="page-demo">
+    <div class="demo-grid">
+        <div class="card span2">
+            <div class="card-header">
+                <div class="card-icon"><i class="fa-solid fa-cloud-bolt"></i></div>
+                <div>
+                    <div class="card-label">SageMaker Endpoint</div>
+                    <div class="card-sub">Connect directly to a deployed model endpoint</div>
+                </div>
+                <span class="badge">Demo</span>
+            </div>
+            <div class="demo-mode-toggle">
+                <button class="mode-btn active" data-mode="sagemaker">SageMaker Direct</button>
+                <button class="mode-btn" data-mode="apigateway">API Gateway</button>
+            </div>
+            <div class="demo-form-grid" id="demo-form-sagemaker">
+                <div class="demo-field">
+                    <label>Endpoint Name <span>*</span></label>
+                    <input type="text" id="sm-endpoint" placeholder="e.g. my-model-endpoint" autocomplete="off">
+                </div>
+                <div class="demo-field">
+                    <label>AWS Region <span>*</span></label>
+                    <select id="sm-region">
+                        <option value="">Select region...</option>
+                        <option value="us-east-1">us-east-1 — N. Virginia</option>
+                        <option value="us-east-2">us-east-2 — Ohio</option>
+                        <option value="us-west-1">us-west-1 — N. California</option>
+                        <option value="us-west-2">us-west-2 — Oregon</option>
+                        <option value="ap-south-1">ap-south-1 — Mumbai</option>
+                        <option value="ap-northeast-1">ap-northeast-1 — Tokyo</option>
+                        <option value="ap-northeast-2">ap-northeast-2 — Seoul</option>
+                        <option value="ap-southeast-1">ap-southeast-1 — Singapore</option>
+                        <option value="ap-southeast-2">ap-southeast-2 — Sydney</option>
+                        <option value="eu-central-1">eu-central-1 — Frankfurt</option>
+                        <option value="eu-west-1">eu-west-1 — Ireland</option>
+                        <option value="eu-west-2">eu-west-2 — London</option>
+                        <option value="sa-east-1">sa-east-1 — São Paulo</option>
+                    </select>
+                </div>
+                <div class="demo-field">
+                    <label>Access Key ID <span>*</span></label>
+                    <input type="text" id="sm-access-key" placeholder="AKIA..." autocomplete="off">
+                </div>
+                <div class="demo-field">
+                    <label>Secret Access Key <span>*</span></label>
+                    <input type="password" id="sm-secret-key" placeholder="••••••••" autocomplete="off">
+                </div>
+                <div class="demo-field">
+                    <label>Session Token <span class="opt">(optional)</span></label>
+                    <input type="text" id="sm-session-token" placeholder="For temporary credentials" autocomplete="off">
+                </div>
+                <div class="demo-field">
+                    <label>Content Type</label>
+                    <input type="text" id="sm-content-type" value="application/json" placeholder="application/json">
+                </div>
+            </div>
+            <div class="demo-form-grid" id="demo-form-apigateway" style="display:none;">
+                <div class="demo-field span2">
+                    <label>API Gateway URL <span>*</span></label>
+                    <input type="text" id="ag-url" placeholder="https://xxxxxxxxxx.execute-api.region.amazonaws.com/stage/invocations" autocomplete="off">
+                </div>
+                <div class="demo-field">
+                    <label>API Key <span class="opt">(optional)</span></label>
+                    <input type="text" id="ag-api-key" placeholder="x-api-key value" autocomplete="off">
+                </div>
+                <div class="demo-field">
+                    <label>Content Type</label>
+                    <input type="text" id="ag-content-type" value="application/json" placeholder="application/json">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+                <div>
+                    <div class="card-label">Input Payload</div>
+                    <div class="card-sub">Upload CSV or type JSON for your model</div>
+                </div>
+            </div>
+            <div class="demo-upload-row">
+                <label class="demo-file-upload" id="demo-file-label">
+                    <i class="fa-solid fa-file-csv"></i>
+                    <span id="demo-file-name">Upload CSV file</span>
+                    <input type="file" id="demo-file-input" accept=".csv" hidden>
+                </label>
+                <button class="demo-clear-btn" id="demo-clear-file" style="display:none;" title="Clear uploaded file">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="demo-input-toggle">
+                <button class="mode-btn active" data-input-mode="raw">Raw Text</button>
+                <button class="mode-btn" data-input-mode="table"><i class="fa-solid fa-table"></i> Table</button>
+            </div>
+            <textarea class="demo-textarea" id="demo-payload" placeholder="Enter CSV or JSON payload...">Record_Time,Day_of_Week,Is_Holiday,Holiday_Name,Random_Event_Surge,Rain_Index,Net_Crowd_Density,Item_ID
+2026-01-01T00:00:00.000Z,4,1,new year's day,0,clear,0,1
+2026-01-01T01:00:00.000Z,4,1,new year's day,0,heavy_rain,29,1
+2026-01-01T02:00:00.000Z,4,1,new year's day,0,light_rain,40,1</textarea>
+            <div class="demo-table-wrap" id="demo-table-wrap" style="display:none;">
+                <div class="demo-table-scroll">
+                    <table class="demo-table" id="demo-table">
+                        <thead id="demo-table-head"></thead>
+                        <tbody id="demo-table-body"></tbody>
+                    </table>
+                </div>
+                <div class="demo-table-actions">
+                    <button class="demo-table-btn" id="demo-add-row" title="Add a new row">
+                        <i class="fa-solid fa-plus"></i> Add Row
+                    </button>
+                </div>
+            </div>
+            <div class="demo-actions">
+                <button class="demo-submit-btn" id="demo-invoke-btn">
+                    <i class="fa-solid fa-paper-plane"></i> Invoke Endpoint
+                </button>
+                <button class="demo-refresh-btn" id="demo-refresh-btn" style="display:none;" title="Refresh all dashboard tabs with prediction data">
+                    <i class="fa-solid fa-arrows-rotate"></i> Refresh Dashboard
+                </button>
+            </div>
+        </div>
+        <div class="card" id="demo-response-card">
+            <div class="card-header">
+                <div class="card-icon"><i class="fa-solid fa-reply"></i></div>
+                <div>
+                    <div class="card-label">Response</div>
+                    <div class="card-sub" id="demo-response-status">Waiting for invocation...</div>
+                </div>
+                <span class="badge" id="demo-status-badge" style="display:none;"></span>
+            </div>
+            <pre class="demo-response" id="demo-response-body">Invoke your SageMaker endpoint to see the response here.</pre>
         </div>
     </div>
 </section>
